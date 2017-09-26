@@ -42,6 +42,10 @@ public class Counter {
         return initialValue;
     }
 
+    public void setInitialValue(Integer initialValue) {
+        this.initialValue = initialValue;
+    }
+
     public Integer increment() {
         return ++currentValue;
     }

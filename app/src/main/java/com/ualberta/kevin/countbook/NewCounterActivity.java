@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import java.util.Date;
 
-public class AddCounterActivity extends AppCompatActivity {
+public class NewCounterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class AddCounterActivity extends AppCompatActivity {
             intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, Integer.parseInt(initialValueString));
             intent.putExtra(IntentConstants.INTENT_COUNTER_DATE, date.getTime());
             intent.putExtra(IntentConstants.INTENT_COUNTER_COMMENT, comment);
-            setResult(IntentConstants.ADD_COUNTER_INTENT_RESULT);
+            setResult(IntentConstants.ADD_COUNTER_INTENT_RESULT, intent);
             finish();
         }
     }
