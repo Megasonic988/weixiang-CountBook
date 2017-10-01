@@ -37,6 +37,30 @@ public class ViewCounterActivity extends AppCompatActivity {
         commentView.setText(counterComment);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent();
+        intent.putExtra(IntentConstants.INTENT_COUNTER_TITLE, counter.getName());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, counter.getInitialValue());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_DATE, counter.getDate().getTime());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_COMMENT, counter.getComment());
+        setResult(IntentConstants.EDIT_COUNTER_INTENT_RESPONSE, intent);
+        finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent intent = new Intent();
+        intent.putExtra(IntentConstants.INTENT_COUNTER_TITLE, counter.getName());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, counter.getInitialValue());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_DATE, counter.getDate().getTime());
+        intent.putExtra(IntentConstants.INTENT_COUNTER_COMMENT, counter.getComment());
+        setResult(IntentConstants.EDIT_COUNTER_INTENT_RESPONSE, intent);
+        finish();
+    }
+
     public void editCounter(View v) {
 
     }

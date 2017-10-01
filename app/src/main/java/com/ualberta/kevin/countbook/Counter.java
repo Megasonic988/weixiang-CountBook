@@ -1,5 +1,7 @@
 package com.ualberta.kevin.countbook;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 
 /**
@@ -8,10 +10,15 @@ import java.util.Date;
 
 public class Counter {
 
+    @Expose
     private String name;
+    @Expose
     private Date date;
+    @Expose
     private Integer initialValue;
+    @Expose
     private Integer currentValue;
+    @Expose
     private String comment;
 
     public Counter (String name, Date date, Integer initialValue, String comment) {

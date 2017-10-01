@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.lang.reflect.Type;
 
 public class CountBookActivity extends AppCompatActivity {
+
+    private static final String FILENAME = "counters.json";
 
     private ListView counterListView;
     private ArrayList<Counter> counterList = new ArrayList<>();
@@ -34,14 +49,50 @@ public class CountBookActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Counter counter = counterList.get(position);
                 Intent intent = new Intent(CountBookActivity.this, ViewCounterActivity.class);
-                intent.putExtra(IntentConstants.INTENT_COUNTER_TITLE, counter.getName());
-                intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, counter.getInitialValue());
-                intent.putExtra(IntentConstants.INTENT_COUNTER_DATE, counter.getDate().getTime());
-                intent.putExtra(IntentConstants.INTENT_COUNTER_COMMENT, counter.getComment());
-                intent.putExtra(IntentConstants.INTENT_COUNTER_CURRENT_VALUE, counter.getCurrentValue());
+                intent.putExtra(IntentConstants.INTENT_COUNTER_INDEX, position);
                 startActivityForResult(intent, IntentConstants.EDIT_COUNTER_INTENT_REQUEST);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onstart", "onstart");
+        loadCountersFromFile();
+        if (counterList == null) {
+            throw new RuntimeException();
+        }
+    }
+
+    void loadCountersFromFile() {
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Counter>>() {}.getType();
+            ArrayList<Counter> counters = gson.fromJson(in, listType);
+            counterArrayAdapter.clear();
+            counterArrayAdapter.addAll(counters);
+        } catch (FileNotFoundException e) {
+            counterList = new ArrayList<Counter>();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void saveCountersToFile() {
+        try {
+            FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), FILENAME), false /*append*/);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            String data = gson.toJson(counterList);
+            gson.toJson(counterList, writer);
+            writer.flush();
+            fos.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addCounter(View v) {
