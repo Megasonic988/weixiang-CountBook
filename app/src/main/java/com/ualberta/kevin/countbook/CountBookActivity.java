@@ -73,6 +73,7 @@ public class CountBookActivity extends AppCompatActivity {
             if (counters != null) {
                 counterArrayAdapter.clear();
                 counterArrayAdapter.addAll(counters);
+                updateCounterListCount();
             }
         } catch (FileNotFoundException e) {
 //            counterList = new ArrayList<Counter>();
@@ -100,6 +101,11 @@ public class CountBookActivity extends AppCompatActivity {
         startActivityForResult(intent, IntentConstants.ADD_COUNTER_INTENT_REQUEST);
     }
 
+    private void updateCounterListCount() {
+        TextView counterListCount = (TextView) findViewById(R.id.counterListCount);
+        counterListCount.setText(counterArrayAdapter.getCount() + " counter" + (counterArrayAdapter.getCount() == 1 ? "" : "s"));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 0) return; // Return without result action
@@ -107,6 +113,7 @@ public class CountBookActivity extends AppCompatActivity {
             int counterIndex = data.getIntExtra(IntentConstants.INTENT_COUNTER_INDEX, 0);
             Counter counter = counterList.get(counterIndex);
             counterArrayAdapter.remove(counter);
+            updateCounterListCount();
             return;
         }
 
@@ -118,6 +125,9 @@ public class CountBookActivity extends AppCompatActivity {
         if (resultCode == IntentConstants.ADD_COUNTER_INTENT_RESULT) {
             Counter counter = new Counter(counterTitle, counterDate, counterInitialValue, counterComment);
             counterArrayAdapter.add(counter);
+            TextView counterListCount = (TextView) findViewById(R.id.counterListCount);
+            counterListCount.setText(counterArrayAdapter.getCount() + " counter" + (counterArrayAdapter.getCount() > 1 ? "s" : ""));
+            updateCounterListCount();
         }
 
         else if (resultCode == IntentConstants.EDIT_COUNTER_INTENT_RESPONSE) {

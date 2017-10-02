@@ -6,11 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.ualberta.kevin.countbook.CountBookActivity">
 
+    <TextView
+        android:id="@+id/counterListCount"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="0 counters" />
+
     <ListView
+        android:id="@+id/counterListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/counterListView">
-    </ListView>
+        android:layout_marginTop="30dp"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -20,5 +27,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:onClick="addCounter"
         app:srcCompat="@drawable/plus" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>
