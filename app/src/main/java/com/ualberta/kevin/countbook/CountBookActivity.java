@@ -1,3 +1,13 @@
+/**
+ * CountBookActivity Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 import android.content.Context;
@@ -30,6 +40,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.lang.reflect.Type;
 
+/**
+ * CountBookActivity controls the main list view interface of the
+ * app. It makes use of a CountersAdapter to render the list view.
+ * This class loads and saves the counters list from/to a file
+ * when the add is started/stopped.
+ */
+
 public class CountBookActivity extends AppCompatActivity {
 
     private static final String FILENAME = "counters.json";
@@ -59,6 +76,9 @@ public class CountBookActivity extends AppCompatActivity {
         saveCountersToFile();
     }
 
+    /**
+     * Load the counters list from a file in JSON format.
+     */
     void loadCountersFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
@@ -82,6 +102,9 @@ public class CountBookActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Save the counters list to a file in JSON format.
+     */
     private void saveCountersToFile() {
         try {
             FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), FILENAME), false /*append*/);
@@ -96,16 +119,31 @@ public class CountBookActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Start the NewCounterActivity when the add counter
+     * button is pressed.
+     * @param v
+     */
     public void addCounter(View v) {
         Intent intent = new Intent(this, NewCounterActivity.class);
         startActivityForResult(intent, IntentConstants.ADD_COUNTER_INTENT_REQUEST);
     }
 
+    /**
+     * Update the value of the list count view.
+     */
     private void updateCounterListCount() {
         TextView counterListCount = (TextView) findViewById(R.id.counterListCount);
         counterListCount.setText(counterArrayAdapter.getCount() + " counter" + (counterArrayAdapter.getCount() == 1 ? "" : "s"));
     }
 
+    /**
+     * Handle the data passed back from other activities. Operations
+     * include add, editing, and deleting counters.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 0) return; // Return without result action

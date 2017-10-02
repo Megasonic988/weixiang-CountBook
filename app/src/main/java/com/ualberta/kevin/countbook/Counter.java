@@ -1,3 +1,13 @@
+/**
+ * Counter Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 import com.google.gson.annotations.Expose;
@@ -5,7 +15,9 @@ import com.google.gson.annotations.Expose;
 import java.util.Date;
 
 /**
- * Created by Kevin on 2017-09-24.
+ * Counter contains the data representing a single
+ * counter. It has convenience functions to increment
+ * and decrement the counter.
  */
 
 public class Counter {

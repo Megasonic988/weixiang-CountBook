@@ -1,7 +1,18 @@
+/**
+ * IntentConstants Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 /**
- * Created by Kevin on 2017-09-24.
+ * IntentConstants stores the constants for passing data
+ * between activities using intents.
  */
 
 public class IntentConstants {

@@ -1,3 +1,13 @@
+/**
+ * ViewCounterActivity Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 import android.content.Intent;
@@ -11,6 +21,11 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+/**
+ * ViewCounterActivity controls an interface used for viewing, resetting,
+ * deleting, and changing the value of a single counter.
+ */
 
 public class ViewCounterActivity extends AppCompatActivity {
 
@@ -45,7 +60,7 @@ public class ViewCounterActivity extends AppCompatActivity {
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
         dateView.setText("Last Updated: " + DATE_FORMAT.format(counter.getDate()).toString());
     }
-
+    
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();

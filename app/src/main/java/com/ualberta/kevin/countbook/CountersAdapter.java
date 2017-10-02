@@ -1,3 +1,13 @@
+/**
+ * CountersAdapter Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 import android.app.Activity;
@@ -14,7 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by weixiang on 10/1/17.
+ * CountersAdapter is a subclass of ArrayAdapter that maps a list of Counter objects
+ * to a list view displaying counters. It contains two listeners to handle the View
+ * and Edit buttons in the list view.
  */
 
 class CountersAdapter extends ArrayAdapter<Counter> {

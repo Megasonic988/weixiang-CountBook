@@ -1,3 +1,13 @@
+/**
+ * NewCounterActivity Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package com.ualberta.kevin.countbook;
 
 import android.content.Intent;
@@ -9,6 +19,11 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+/**
+ * NewCounterActivity controls a form used for creating a
+ * new counter.
+ */
+
 public class NewCounterActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +32,11 @@ public class NewCounterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_counter);
     }
 
+    /**
+     * Checks if all data in the form is valid. Then, finishes the activity
+     * and sends data back to the previous activity.
+     * @param v
+     */
     public void saveCounter(View v) {
         String counterTitle = ((EditText) findViewById(R.id.counterTitle)).getText().toString();
         Date date = new Date();

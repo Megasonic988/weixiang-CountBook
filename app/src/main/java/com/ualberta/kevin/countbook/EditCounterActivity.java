@@ -1,3 +1,19 @@
+/**
+ * EditCounterActivity Class
+ *
+ * Copyright 2017 Kevin Wang
+ *
+ * @author weixiang
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
+/**
+ * EditCounterActivity controls a form used for directly editing
+ * the fields of a counter. It is passed in the data of the
+ * counter to be edited.
+ */
+
 package com.ualberta.kevin.countbook;
 
 import android.content.Intent;
@@ -41,6 +57,11 @@ public class EditCounterActivity extends AppCompatActivity {
         commentView.setText(counterComment);
     }
 
+    /**
+     * Checks if all data in the form is valid. Then, finishes the activity
+     * and sends data back to the previous activity.
+     * @param v
+     */
     public void saveEdits(View v) {
         String counterTitle = ((EditText) findViewById(R.id.editCounterTitle)).getText().toString();
         Date date = new Date();
