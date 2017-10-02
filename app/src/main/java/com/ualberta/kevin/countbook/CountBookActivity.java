@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.lang.reflect.Type;
@@ -44,38 +46,36 @@ public class CountBookActivity extends AppCompatActivity {
         counterArrayAdapter = new CountersAdapter(this, counterList);
         counterListView.setAdapter(counterArrayAdapter);
 
-        counterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Counter counter = counterList.get(position);
-                Intent intent = new Intent(CountBookActivity.this, ViewCounterActivity.class);
-                intent.putExtra(IntentConstants.INTENT_COUNTER_INDEX, position);
-                startActivityForResult(intent, IntentConstants.EDIT_COUNTER_INTENT_REQUEST);
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("onstart", "onstart");
         loadCountersFromFile();
         if (counterList == null) {
             throw new RuntimeException();
         }
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveCountersToFile();
+    }
+
     void loadCountersFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            String response = new String();
+            for (String line; (line = in.readLine()) != null; response += line);
+
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Counter>>() {}.getType();
-            ArrayList<Counter> counters = gson.fromJson(in, listType);
-            counterArrayAdapter.clear();
-            counterArrayAdapter.addAll(counters);
+            ArrayList<Counter> counters = gson.fromJson(response, listType);
+
+            if (counters != null) {
+                counterArrayAdapter.clear();
+                counterArrayAdapter.addAll(counters);
+            }
         } catch (FileNotFoundException e) {
-            counterList = new ArrayList<Counter>();
+//            counterList = new ArrayList<Counter>();
         } catch (Exception e) {
             throw new RuntimeException();
         }
@@ -102,52 +102,34 @@ public class CountBookActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 0) return; // Return without result action
         if (resultCode == IntentConstants.DELETE_COUNTER_INTENT_RESPONSE) {
             int counterIndex = data.getIntExtra(IntentConstants.INTENT_COUNTER_INDEX, 0);
             Counter counter = counterList.get(counterIndex);
             counterArrayAdapter.remove(counter);
             return;
         }
+
         String counterTitle = data.getStringExtra(IntentConstants.INTENT_COUNTER_TITLE);
         Integer counterInitialValue = data.getIntExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, 0);
         Date counterDate = new Date(data.getLongExtra(IntentConstants.INTENT_COUNTER_DATE, 0));
         String counterComment = data.getStringExtra(IntentConstants.INTENT_COUNTER_COMMENT);
+
         if (resultCode == IntentConstants.ADD_COUNTER_INTENT_RESULT) {
             Counter counter = new Counter(counterTitle, counterDate, counterInitialValue, counterComment);
             counterArrayAdapter.add(counter);
-        } else if (resultCode == IntentConstants.EDIT_COUNTER_INTENT_RESPONSE) {
+        }
+
+        else if (resultCode == IntentConstants.EDIT_COUNTER_INTENT_RESPONSE) {
             Integer counterCurrentValue = data.getIntExtra(IntentConstants.INTENT_COUNTER_CURRENT_VALUE, 0);
             int counterIndex = data.getIntExtra(IntentConstants.INTENT_COUNTER_INDEX, 0);
-            Counter counter = counterList.get(counterIndex);
+            Counter counter = counterArrayAdapter.getItem(counterIndex);
             counter.setName(counterTitle);
             counter.setInitialValue(counterInitialValue);
-            counter.setDate(counterDate);
+            counter.setDate(new Date());
             counter.setCurrentValue(counterCurrentValue);
             counter.setComment(counterComment);
-        }
-    }
-
-    private class CountersAdapter extends ArrayAdapter<Counter> {
-        public CountersAdapter(Context context, ArrayList<Counter> counters) {
-            super(context, 0, counters);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // Get the data item for this position
-            Counter counter = counterList.get(position);
-            // Check if an existing view is being reused, otherwise inflate the view
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_counter, parent, false);
-            }
-            // Lookup view for data population
-            TextView titleView = (TextView) convertView.findViewById(R.id.counterListItemTitle);
-            TextView currentValueView = (TextView) convertView.findViewById(R.id.counterListItemCurrentValue);
-            // Populate the data into the template view using the data object
-            titleView.setText(counter.getName());
-            currentValueView.setText(counter.getCurrentValue().toString());
-            // Return the completed view to render on screen
-            return convertView;
+            counterArrayAdapter.notifyDataSetChanged();
         }
     }
 }

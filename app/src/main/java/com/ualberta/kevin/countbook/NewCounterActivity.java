@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -23,10 +24,13 @@ public class NewCounterActivity extends AppCompatActivity {
         String comment = ((EditText) findViewById(R.id.counterComment)).getText().toString();
 
         if (counterTitle.equals("")) {
-
+            Toast.makeText(getApplicationContext(), "Please enter a title", Toast.LENGTH_SHORT).show();
         } else if (initialValueString.equals("")) {
-
-        } else {
+            Toast.makeText(getApplicationContext(), "Please enter an initial value", Toast.LENGTH_SHORT).show();
+        } else if (Integer.parseInt(initialValueString) < 0) {
+            Toast.makeText(getApplicationContext(), "The initial value must be positive", Toast.LENGTH_SHORT).show();
+        }
+        else {
             Intent intent = new Intent();
             intent.putExtra(IntentConstants.INTENT_COUNTER_TITLE, counterTitle);
             intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, Integer.parseInt(initialValueString));

@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.ualberta.kevin.countbook.EditCounterActivity">
 
     <EditText
-        android:id="@+id/counterTitle"
+        android:id="@+id/editCounterCurrentValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Current Value"
+        android:inputType="number"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCounterInitialValue" />
+
+    <EditText
+        android:id="@+id/editCounterTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -16,12 +31,13 @@
         android:ems="10"
         android:hint="Title"
         android:inputType="text"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/counterInitialValue"
+        android:id="@+id/editCounterInitialValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -32,10 +48,10 @@
         android:inputType="number"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counterTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editCounterTitle" />
 
     <EditText
-        android:id="@+id/counterComment"
+        android:id="@+id/editCounterComment"
         android:layout_width="0dp"
         android:layout_height="126dp"
         android:layout_marginLeft="16dp"
@@ -44,19 +60,20 @@
         android:ems="10"
         android:hint="Comment"
         android:inputType="text"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counterInitialValue" />
+        app:layout_constraintTop_toBottomOf="@+id/editCounterCurrentValue" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:onClick="saveEdits"
         android:text="Save"
-        android:onClick="saveCounter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

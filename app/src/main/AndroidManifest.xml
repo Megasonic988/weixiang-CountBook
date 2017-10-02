@@ -11,8 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".CountBookActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,9 +20,9 @@
         </activity>
         <activity
             android:name=".NewCounterActivity"
-            android:label="@string/title_activity_add_counter"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ViewCounterActivity"></activity>
+            android:label="@string/title_activity_add_counter" />
+        <activity android:name=".ViewCounterActivity" />
+        <activity android:name=".EditCounterActivity"></activity>
     </application>
 
 </manifest>

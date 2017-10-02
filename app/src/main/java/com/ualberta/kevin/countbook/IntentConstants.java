@@ -9,7 +9,7 @@ public class IntentConstants {
     public final static int ADD_COUNTER_INTENT_RESULT = 2;
     public final static int EDIT_COUNTER_INTENT_REQUEST = 3;
     public final static int EDIT_COUNTER_INTENT_RESPONSE = 4;
-    public final static int DELETE_COUNTER_INTENT_RESPONSE = 4;
+    public final static int DELETE_COUNTER_INTENT_RESPONSE = 5;
 
     public final static String INTENT_COUNTER_TITLE = "INTENT_COUNTER_TITLE";
     public final static String INTENT_COUNTER_DATE = "INTENT_COUNTER_DATE";

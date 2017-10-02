@@ -58,7 +58,10 @@ public class Counter {
     }
 
     public Integer decrement() {
-        return --currentValue;
+        if (currentValue > 0) {
+            --currentValue;
+        }
+        return currentValue;
     }
 
     public Integer getCurrentValue() {
