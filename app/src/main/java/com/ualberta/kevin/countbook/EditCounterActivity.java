@@ -63,7 +63,7 @@ public class EditCounterActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.putExtra(IntentConstants.INTENT_COUNTER_TITLE, counterTitle);
             intent.putExtra(IntentConstants.INTENT_COUNTER_INITIAL_VALUE, Integer.parseInt(initialValueString));
-            intent.putExtra(IntentConstants.INTENT_COUNTER_CURRENT_VALUE, counter.getCurrentValue());
+            intent.putExtra(IntentConstants.INTENT_COUNTER_CURRENT_VALUE, Integer.parseInt(currentValueString));
             intent.putExtra(IntentConstants.INTENT_COUNTER_DATE, date.getTime());
             intent.putExtra(IntentConstants.INTENT_COUNTER_COMMENT, comment);
             intent.putExtra(IntentConstants.INTENT_COUNTER_INDEX, counterIndex);

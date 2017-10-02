@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ViewCounterActivity extends AppCompatActivity {
@@ -38,6 +41,9 @@ public class ViewCounterActivity extends AppCompatActivity {
         currentValueView.setText(counterCurrentValue.toString());
         TextView commentView = (TextView)findViewById(R.id.viewCounterComment);
         commentView.setText(counterComment);
+        TextView dateView = (TextView)findViewById(R.id.viewCounterDate);
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
+        dateView.setText("Last Updated: " + DATE_FORMAT.format(counter.getDate()).toString());
     }
 
     @Override
